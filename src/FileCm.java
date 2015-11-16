@@ -14,11 +14,17 @@ public class FileCm {
 	}
 
 	public boolean exists() {
-		return file.exists();
+		if (file.exists())
+			return true;
+		System.out.println("File not founded");
+		return false;
 	}
 
 	public boolean verifyExtension() {
-		return filename.endsWith(".cm");
+		if(filename.endsWith(".cm"))
+			return true;
+		System.out.println("Please, enter a file with .cm extension");
+		return false;
 	}
 
 	public boolean valid() {
