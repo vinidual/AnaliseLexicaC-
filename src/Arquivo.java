@@ -1,13 +1,17 @@
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 
 public class Arquivo {
 	
-	private String nome;
-	private String extensao;
+	private static String nome;
+	private static String extensao;
+	private FileReader arq;
 
 	public void criaArquivo(String nomeDeArquivo) {
 		int indice = Math.abs(nomeDeArquivo.lastIndexOf("."));
-		this.nome = nomeDeArquivo.substring(0, indice);
-		this.extensao = nomeDeArquivo.substring(indice+1);
+		nome = nomeDeArquivo.substring(0, indice);
+		extensao = nomeDeArquivo.substring(indice+1);
 	}
 
 	public boolean extensaoValida() {
@@ -21,11 +25,31 @@ public class Arquivo {
 	}
 	
 	public String retornaExtensao(){
-		return this.extensao;
+		return extensao;
 	}
 	
 	public String retornaNome(){
-		return this.nome;
+		return nome;
 	}
+
+	public boolean nomeValido() {
+		System.out.println(nome);
+		if( nome.isEmpty() ||  !nome.matches("[a-zA-Z0-9]+") )
+			return false;
+		return true;
+	}
+
+	public boolean arquivoExiste() {
+		try {
+			String nomeDoArquivo = nome + "." + extensao;
+			arq = new FileReader( nomeDoArquivo );
+		} catch( FileNotFoundException ex ){
+			System.out.println( ex.getMessage() );
+			return false;
+		}
+		return true;
+	}
+	
+	
 
 }
