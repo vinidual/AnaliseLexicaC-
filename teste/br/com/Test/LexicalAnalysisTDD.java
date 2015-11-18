@@ -1,8 +1,13 @@
+package br.com.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import br.com.Model.FileCheck;
+import br.com.Model.FileScanner;
+import br.com.Model.LexicalAnalysis;
 
 public class LexicalAnalysisTDD {
 	

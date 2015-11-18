@@ -1,3 +1,4 @@
+package br.com.Model;
 import java.io.File;
 
 public class FileCheck {
