@@ -18,8 +18,16 @@ public class LexicalAnalysisTDD {
 	private LexicalAnalysis la = new LexicalAnalysis();
 	private ArrayList<String> expected = new ArrayList<String>();
 	
+	public void invalidExtensionFile1() {
+		dir = "src";
+		filename = null;
+		file.createFile(filename, dir);
+		file.validExtension();
+		assertFalse(file.validExtension());
+	}
+	
 	@Test
-	public void invalidExtensionFile() {
+	public void invalidExtensionFile2() {
 		dir = "src";
 		filename = "file.";
 		file.createFile(filename, dir);

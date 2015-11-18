@@ -4,21 +4,18 @@ import java.io.File;
 public class FileCheck {
 	
 	private static String dir;
-	private static String name;
-	private static String ext;
+	private static String filename;
 	private static File file;
 
-	public void createFile(String filename, String directory) {
-		int index = Math.abs(filename.lastIndexOf("."));
-		name = filename.substring(0, index);
-		ext = filename.substring(index+1);
+	public void createFile(String fn, String directory) {
+		filename = fn;
 		dir = directory;
-		file = new File( dir + "/" + name + "." + ext );
+		file = new File( dir + "/" + filename );
 	}
 
 	public boolean validExtension() {
 		try{
-			if( ext.compareTo("cm") == 0 )
+			if( filename.endsWith(".cm") )
 				return true;
 		} catch( NullPointerException ex ){
 			System.out.println( ex.getMessage() );
@@ -27,7 +24,7 @@ public class FileCheck {
 	}
 
 	public boolean validName() {
-		if( name.isEmpty() ||  !name.matches("[a-zA-Z0-9]+") )
+		if( filename.isEmpty() ||  !filename.matches("[a-zA-Z0-9]+.cm") )
 			return false;
 		return true;
 	}

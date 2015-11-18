@@ -6,15 +6,15 @@ import java.util.Map;
 
 public class LexicalAnalysis {
 	
-	private String lexema = "";
+	private static String lexema = "";
 	
-	private int numLines = 1;
+	private static int numLines = 1;
 	
-	private ArrayList<String> result = new ArrayList<String>();
+	private static ArrayList<String> result = new ArrayList<String>();
 	
-	private Map<String,String> error = new HashMap<String,String>();
+	private static Map<String,String> error = new HashMap<String,String>();
 	
-	private enum Token {
+	private static enum Token {
 		ID, NUM, RESERVED,
 		SUM, SUB, MULT, DIV,
 		LOW, GRE, LOWE, GREE,
