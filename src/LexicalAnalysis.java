@@ -1,14 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LexicalAnalysis {
 	
 	private String lexema = "";
 	
-	@SuppressWarnings("unused")
-	private int numLines = 0;
+	private int numLines = 1;
 	
-	@SuppressWarnings("rawtypes")
-	private ArrayList result = new ArrayList();
+	private ArrayList<String> result = new ArrayList<String>();
+	
+	private Map<String,String> error = new HashMap<String,String>();
 	
 	private enum Token {
 		ID, NUM, RESERVED,
@@ -23,6 +25,14 @@ public class LexicalAnalysis {
 	}
 	
 	Token token;
+	
+	public void lexicalAnalysis( char[] buffer ){
+		result.clear();
+		for( int i=0; i < buffer.length; i++ ){
+			this.readChar(Character.toString(buffer[i]));
+		}
+		this.checkLastLexema();
+	}
 	
 	public boolean checkTokenReserved( String str ) {
 		if( str.compareTo("if") == 0 ||
@@ -83,6 +93,7 @@ public class LexicalAnalysis {
 			}
 			else {
 				symbolReaded("ERR");
+				error.put("<<", ""+numLines);
 			}
 		}
 		else if( lex.matches(">") ){
@@ -91,6 +102,7 @@ public class LexicalAnalysis {
 			}
 			else {
 				symbolReaded("ERR");
+				error.put(">>", ""+numLines);
 			}
 		}
 		else if( lex.matches("!") ){
@@ -99,6 +111,7 @@ public class LexicalAnalysis {
 			}
 			else {
 				symbolReaded("ERR");
+				error.put("!!", ""+numLines);
 			}
 		}
 		else if( lex.matches("\\(") ){
@@ -125,7 +138,7 @@ public class LexicalAnalysis {
 		else if( lex.matches(";") ){
 			symbolReaded("COMPT");
 		}
-		else if( lex.matches(" ") ){
+		else if( lex.matches("[ |\t|\"|\'|\r]") ){
 			//nothing
 		}
 		else if( lex.matches("\n") ){
@@ -133,10 +146,10 @@ public class LexicalAnalysis {
 		}
 		else {
 			symbolReaded("ERR");
+			error.put(lex, ""+numLines);
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void letterReaded(String lex){
 		if( lexema.matches("[0-9]+") ){
 			lexema = lex;
@@ -154,7 +167,6 @@ public class LexicalAnalysis {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void numberReaded(String lex){
 		if( lexema.matches("[a-zA-Z]+") ){
 			lexema += lex;
@@ -171,7 +183,6 @@ public class LexicalAnalysis {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void symbolReaded(String symbol){
 		if( token == Token.NUM )
 			result.add("NUM");
@@ -180,9 +191,28 @@ public class LexicalAnalysis {
 		result.add(symbol);
 		lexema = "";
 	}
+	
+	public void checkLastLexema(){
+		if( lexema.matches("[a-zA-Z]+.*") )
+			result.add("ID");
+		else
+			if( lexema.matches("[0-9]+") )
+				result.add("NUM");
+	}
 
 	public Object getResult() {
 		return result;
+	}
+	
+	public String getError(){
+		String error_log = "Successfull Analysis";
+		if( error.size() > 0 ){
+			error_log = "";
+			for( String key : error.keySet() ){
+				error_log += "Syntax Error: character '" + key + "' at line '" + error.get(key) + "'.\n";
+			}
+		}
+		return error_log;
 	}
 	
 }

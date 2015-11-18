@@ -10,6 +10,8 @@ public class LexicalAnalysisTDD {
 	private String filename;
 	private FileCheck file = new FileCheck();
 	private FileScanner fs = new FileScanner();
+	private LexicalAnalysis la = new LexicalAnalysis();
+	private ArrayList<String> expected = new ArrayList<String>();
 	
 	@Test
 	public void invalidExtensionFile() {
@@ -77,19 +79,55 @@ public class LexicalAnalysisTDD {
 		assertArrayEquals(expected, fs.readFile());
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void validTokenReserved(){
 		dir = "src";
 		filename = "file.cm";
 		file.createFile(filename, dir);
 		fs.createFileScanner(file.getFile());
+		assertTrue(la.checkTokenReserved("int"));
+	}
+	
+	@Test
+	public void lexicalError1() {
+		dir = "src";
+		filename = "file.cm";
+		file.createFile(filename, dir);
+		fs.createFileScanner(file.getFile());
+		char[] buffer = {'#','$','a','\n'};
+		la.lexicalAnalysis(buffer);
+		expected.clear();
+		expected.add("ERR");
+		expected.add("ERR");
+		expected.add("ID");
+		assertEquals(expected, la.getResult());
+	}
+	
+	@Test
+	public void lexicalError2() {
+		dir = "src";
+		filename = "file.cm";
+		file.createFile(filename, dir);
+		fs.createFileScanner(file.getFile());
+		char[] buffer = {'#','$', '~','a','\n','&'};
+		la.lexicalAnalysis(buffer);
+		expected.clear();
+		expected.add("ERR");
+		expected.add("ERR");
+		expected.add("ID");
+		System.out.println(la.getError());
+		assertFalse(la.getError().compareTo("Successfull Analysis")==0);
+	}
+	
+	@Test
+	public void successfullAnalysis1() {
+		dir = "src";
+		filename = "file.cm";
+		file.createFile(filename, dir);
+		fs.createFileScanner(file.getFile());
 		char[] buffer = fs.readFile();
-		LexicalAnalysis la = new LexicalAnalysis();
-		for( int i=0; i < buffer.length; i++ ){
-			la.readChar(Character.toString(buffer[i]));
-		}
-		ArrayList expected = new ArrayList();
+		la.lexicalAnalysis(buffer);
+		expected.clear();
 		expected.add("ID");
 		expected.add("ATR");
 		expected.add("NUM");
@@ -97,12 +135,15 @@ public class LexicalAnalysisTDD {
 		assertEquals(expected, la.getResult());
 	}
 	
-	public void lexicalError() {
-		
-	}
-	
-	public void successfullAnalysis() {
-	
+	@Test
+	public void successfullAnalysis2() {
+		dir = "src";
+		filename = "testSuccess.cm";
+		file.createFile(filename, dir);
+		fs.createFileScanner(file.getFile());
+		char[] buffer = fs.readFile();
+		la.lexicalAnalysis(buffer);
+		assertTrue(la.getError().compareTo("Successfull Analysis")==0);
 	}
 	
 	
