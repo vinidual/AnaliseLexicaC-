@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class LexicalAnalysisTDD {
@@ -68,10 +71,39 @@ public class LexicalAnalysisTDD {
 	public void validCaracterVectorReaded(){
 		dir = "src";
 		filename = "testNumValid.cm";
-		char []expected = {'1','2','3',';',10};
+		char[] expected = {'1','2','3',';'};
 		file.createFile(filename, dir);
 		fs.createFileScanner(file.getFile());
 		assertArrayEquals(expected, fs.readFile());
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Test
+	public void validTokenReserved(){
+		dir = "src";
+		filename = "file.cm";
+		file.createFile(filename, dir);
+		fs.createFileScanner(file.getFile());
+		char[] buffer = fs.readFile();
+		LexicalAnalysis la = new LexicalAnalysis();
+		for( int i=0; i < buffer.length; i++ ){
+			la.readChar(Character.toString(buffer[i]));
+		}
+		ArrayList expected = new ArrayList();
+		expected.add("ID");
+		expected.add("ATR");
+		expected.add("NUM");
+		expected.add("COMPT");
+		assertEquals(expected, la.getResult());
+	}
+	
+	public void lexicalError() {
+		
+	}
+	
+	public void successfullAnalysis() {
+	
+	}
+	
 	
 }
