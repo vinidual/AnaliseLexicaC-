@@ -5,7 +5,9 @@ Trabalho realizado para a disciplina de Validação e Verificação de Software 
   - Karen Saori Suzuki
   - Vinícius Duarte de Almeida
 
-LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) utilizando metodologia TDD com o framework [JUnit4](http://junit.org/).
+LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) implementado com metodologia TDD utilizando o framework [JUnit4](http://junit.org/).
+
+O objetivo desse trabalho é por em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software.
 
 ## O Problema
 
