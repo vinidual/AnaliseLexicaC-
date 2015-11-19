@@ -105,8 +105,229 @@ As *tasks* criadas foram as seguintes:
 
 - *successfullAnalysis*: método para verificar se um arquivo de entrada realmente está correto.
 
+## Desenvolvimento ##
+
+O objetivo do TDD é gerar código a partir dos testes, assim descreveremos como ocorreu esse desenvolvimento.
+
+# Teste arquivo Existente/Inexistente #
+
+Nesses testes o programa envia uma mensagem de erro `file not found`
+
+**Teste arquivo inexistente**
+
+Começamos criando o teste para um nome de arquivo inexistente:
+
+```
+    @Test
+    public void fileInexistent() {
+        String filename = "file";
+        FileCheck file = new FileCheck();
+        assertFalse(file.exists(filename));
+    }
+```    
+
+Rodamos o teste e encontramos o seguinte erro: 
+`Não existe classe FileCheck`.
+
+Criamos a classe FileCheck em src/br/com/Model e rodamos o teste novamente, obtendo o erro: 
+`Não foi definido o método exists(String) na classe FileCheck`.
+
+```
+public class FileCheck {
+
+    public boolean exists(String filename) {
+        File file = new File(filename);
+        if (file.exists())
+            return true;
+        else{
+            System.out.println("File not found");
+            return false;
+        }
+    }
+
+}
+```
+
+**Teste arquivo existente**
+
+Para esse teste colocamos um arquivo no projeto, e testamos se o método nos dá o resultado esperado 
+com o seguinte código:
+```
+    @Test
+    public void fileExist() {
+        String filename = "src/testSuccess.cm";
+        FileCheck file = new FileCheck();
+        assertTrue(file.exists(filename));
+    }
+```
+
+Rodamos e verificamos sucesso no teste.
+
+Podemos refatorar os testes, movendo a declaração de `String filename` e do `FileCheck file` como objetos do escopo global da classe de teste. Assim não precisamos toda vez ter que declará-los. Assim ficamos com o seguinte código:
+```
+public class LexicalAnalysisTDD {
+    private String filename;
+    private FileCheck file;
+
+    @Test
+    public void fileInexistent() {
+        filename = "file";
+        file = new br.com.Model.FileCheck();
+        assertFalse(file.exists(filename));
+    }
+    
+    @Test
+    public void fileExist() {
+        String filename = "src/testSuccess.cm";
+        file = new FileCheck();
+        assertTrue(file.exists(filename));
+    }
+
+}
+```
+Teste arquivo de extensão valida/invalida
+Nesses testes ele verificará se o arquivo é de extensão .cm como declarado nos requisitos.
+Caso não seja, o programa envia uma mensagem de erro “Please, enter a file with .cm extension”
+Para esses testes, entramos uma String qualquer com uma extensão, não importando se o arquivo exista ou não, já que esse teste só verificará a extensão
+
+Teste arquivo de extensão invalida
+Implementamos o teste:
+    @Test
+    public void fileExtensionInvalid() {
+        filename = "testInvalid.txt";
+        file = new FileCheck();
+        assertFalse(file.verifyExtension(filename));
+    }
+
+Verificamos que existe o seguinte erro:
+não foi definido o método verifyExtension(String) na classe FileCheck.
+Implementamos na classe FileCheck o seguinte código:
+    public boolean verifyExtension(String filename) {
+        if(filename.endsWith(".cm"))
+            return true;
+        System.out.println("Please, enter a file with .cm extension");
+        return false;
+    }
+
+Podemos refatorar a classe FileCheck, já que os métodos desta usa String filename como parâmetro, assim não precisamos toda vez ter que inseri-lo. Podemos montar um construtor da classe com esse parâmetro e declarar a String como atributo da classe:
+public class FileCheck {
+    private String filename;
+    
+    public FileCheck(String filename){
+        this.filename = filename;
+    }
+    
+    public boolean exists() {
+        File file = new File(filename);
+        if (file.exists())
+            return true;
+        else{
+            System.out.println("File not found");
+            return false;
+        }
+    }
+    
+    public boolean verifyExtension() {
+        if(filename.endsWith(".cm"))
+            return true;
+        System.out.println("Please, enter a file with .cm extension");
+        return false;
+    }
+
+}
+
+E modificamos no teste
+    private FileCheck file;
+
+    @Test
+    public void fileInexistent() {
+        file = new FileCheck("file");
+        assertFalse(file.exists());
+    }
+    
+    @Test
+    public void fileExist() {
+        file = new FileCheck("src/testSuccess.cm");
+        assertTrue(file.exists());
+    }
+
+    
+    @Test
+    public void fileExtensionInvalid() {
+        file = new FileCheck("testInvalid.txt");
+        assertFalse(file.verifyExtension());
+    }
+    
+    @Test
+    public void fileExtensionValid() {
+        file = new FileCheck("testValid.cm");
+        assertTrue(file.verifyExtension());
+    }
+Além disso podemos tirar a String filename e inserir a String do teste diretamente no construtor, pois ela só é usada para colocar no construtor
+    @Test
+    public void fileInexistent() {
+        file = new FileCheck("file");
+        assertFalse(file.exists());
+    }
+    
+    @Test
+    public void fileExist() {
+        file = new FileCheck("src/testSuccess.cm");
+        assertTrue(file.exists());
+    }
+
+    
+    @Test
+    public void fileExtensionInvalid() {
+        file = new FileCheck("testInvalid.txt");
+        assertFalse(file.verifyExtension());
+    }
+
+Teste arquivo extensão valida
+    @Test
+    public void fileExtensionValid() {
+        file = new FileCheck("testValid.cm");
+        assertTrue(file.verifyExtension());
+    }
+
+Rodamos e não foram encontrados erros
 
 
+Teste (?)
+Esse teste verificara se a classe retornará o arquivo depois de verificar se existe e se é de extensão .cm.
+@Test
+    public void fileScannerCreated() {
+        file = new FileCheck("src/file.cm");
+        assertTrue(fs.createFileScanner(file.getFile()));
+    }
+
+Criamos o método getFile:
+public File getFile(){
+        File file = new File(filename);
+        return file;
+    }
+
+Podemos refatorar o código já que os métodos exists() e o getFile() criam um objeto File. Declaramos como atributo da classe o objeto file, modificamos o construtor e os métodos exists() e getFile():
+
+private File file;
+    
+    public FileCheck(String filename){
+        this.filename = filename;
+        this.file = new File(filename);
+    }
+    
+    public boolean exists() {
+        if (file.exists())
+            return true;
+        else{
+            System.out.println("File not found");
+            return false;
+        }
+    }
+
+    public File getFile(){
+        return file;
+    }
 
 
 
