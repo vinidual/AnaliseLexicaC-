@@ -2,8 +2,8 @@ package br.com.Model;
 import java.io.File;
 
 public class FileCheck {
-	String filename;
-	File file;
+	private String filename;
+	private File file;
 	
 	public FileCheck(String filename){
 		this.filename = filename;
