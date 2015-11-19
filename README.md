@@ -47,10 +47,10 @@ As classes java do programa estão organizadas em duas pastas, `src/br.com.Model
 
 Na primeira temos os seguintes arquivos:
 
-  `FileCheck`: classe responsável por validar o nome, extensão e diretório do arquivo de entrada e verificar se 
+- `FileCheck`: classe responsável por validar o nome, extensão e diretório do arquivo de entrada e verificar se 
   tal arquivo a ser lido existe.
   
-  `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
+- `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
   e armazená-los em um *buffer*, pós validação feita em `FileCheck`.
   
-  `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, pós executação dos processos em `FileScanner`.
+- `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, pós executação dos processos em `FileScanner`.
