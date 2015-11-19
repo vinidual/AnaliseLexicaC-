@@ -20,7 +20,7 @@ e `localizando` o número da linha em que o evento ocorreu.
 
 ## Requisitos
 
-**Arquivo de entrada**: o nome do arquivo deve ser `alfanumérico` e a `extensão` necessariamente `.cm`
+**Arquivo de entrada**: o nome do arquivo deve ser de `extensão` necessariamente `.cm`
 
 **Sintaxe da Linguagem C-**: a análise léxica deve se basear na sintaxe da linguagem C- tendo como 
 referência as condições abaixo.
@@ -66,8 +66,7 @@ As classes java do programa estão organizadas em duas pastas, `src/br.com.Model
 
 Na primeira temos os seguintes arquivos:
 
-- `FileCheck`: classe responsável por validar o nome, extensão e diretório do arquivo de entrada e verificar se 
-  tal arquivo a ser lido existe.
+- `FileCheck`: classe responsável por verificar se tal arquivo a ser lido existe evalidar a extensão.
   
 - `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
   e armazená-los em um *buffer*, após validação feita em `FileCheck`.
