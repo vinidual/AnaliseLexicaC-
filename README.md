@@ -7,7 +7,7 @@ Trabalho realizado para a disciplina de Validação e Verificação de Software 
 
 LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) implementado com metodologia TDD utilizando o framework [JUnit4](http://junit.org/).
 
-O objetivo desse trabalho é por em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software.
+O objetivo desse trabalho é por em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software. Para seu desenvolvimento foi utilizado a IDE [Eclipse](https://projects.eclipse.org/releases/mars) Mars
 
 ## O Problema
 
@@ -73,3 +73,18 @@ Na primeira temos os seguintes arquivos:
   e armazená-los em um *buffer*, pós validação feita em `FileCheck`.
   
 - `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, pós executação dos processos em `FileScanner`.
+
+Na segunda temos:
+
+- `LexicalAnalysisTDD`: classe responsável por implementar as *tasks* elaboradas para abordar o comportamentos dos métodos utilizados no programa.
+
+As demais pastas referenciam biliotecas (JRE e JUnit) e arquivos de configuração do programa.
+
+## *Tasks*
+
+São tarefas pensadas antes de implementar o código dos testes, servem para manter um lembrete do que deve ser implementado. Após concluir um número satisfatório de *tasks* iniciamos sua implementação no arquivo `LexicalAnalysisTDD` gerando somente código necessário na aplicação. Além disso, concretizamos nossos casos de teste.
+
+- As *tasks* criadas foram as seguintes:
+
+
+
