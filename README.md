@@ -86,7 +86,7 @@ São tarefas pensadas antes de implementar o código dos testes, servem para man
 
 Após concluir um número satisfatório de *tasks* iniciamos sua implementação no arquivo `LexicalAnalysisTDD` gerando somente código necessário na aplicação. Além disso, concretizamos nossos casos de teste implementando as *tasks* como métodos da classe `LexicalAnalysisTDD`.
 
-- As *tasks* criadas foram as seguintes:
+As *tasks* criadas foram as seguintes:
 
 - *invalidExtensionFile*: método para testar o comportamento do programa com arquivos de extensão inválida.
 
