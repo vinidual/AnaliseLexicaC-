@@ -5,9 +5,7 @@ Trabalho realizado para a disciplina de Validação e Verificação de Software 
   - Karen Saori Suzuki
   - Vinícius Duarte de Almeida
 
-LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf), o programa foi desenvolvido aplicando a metodologia TDD fazendo uso do framework [JUnit4](http://junit.org/). 
-
-O objetivo desse trabalho foi usar TDD na prática para entender seu processo de desenvolvimento. Para seu desenvolvimento foi utilizado a [IDE Eclipse Mars](https://projects.eclipse.org/releases/mars).
+LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) utilizando metodologia TDD com o framework [JUnit4](http://junit.org/).
 
 ## O Problema
 
@@ -33,10 +31,18 @@ if    else    int   void    while   return
 ```
 +   -   *   /   <   <=    >   >=    ==    !=    =   ;   ,   (   )   [   ]   {   }   /*    */
 ```
+  - Os marcadores de identificador e de número, definidos pelas expressões regulares a seguir:
+```
+identificador (ID): letra+
+número (NUM): dígito+
+letra: a|..|z|A|..|Z
+dígito: 0|..|9
+```
 Qualquer lexema lido que não seja os mencionados acima será tratado como erro.
 
 ## Estrutura
 
+- A estrutura de diretórios do projeto está organizada da seguinte maneira:
 As classes java do programa estão organizadas em duas pastas, `src/br.com.Model` e `test/br.com.Test`.
 
 Na primeira temos os seguintes arquivos:
@@ -45,17 +51,6 @@ Na primeira temos os seguintes arquivos:
   tal arquivo a ser lido existe.
   
   `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
-  e armazená-los em um *buffer*, após validação feita em `FileCheck`.
+  e armazená-los em um *buffer*, pós validação feita em `FileCheck`.
   
-  `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, após executação dos processos em `FileScanner`.
-  
-Na segunda pasta:
-
-  `LexicalAnalysisTDD`: classe responsável por implementar e executar os testes elaborados.
-  
-As outras pastas referenciam bibliotecas (JRE e JUnit) e arquivos de configuração do projeto.
-
-## Testes
-
-
- 
+  `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, pós executação dos processos em `FileScanner`.
