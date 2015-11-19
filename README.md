@@ -24,25 +24,42 @@ e `localizando` o número da linha em que o evento ocorreu.
 referência as condições abaixo.
 
   - As palavras reservadas da linguagem são as seguintes:
+  
 ```
 if    else    int   void    while   return
 ```
+
   - Os símbolos especiais da linguagem são:
+  
 ```
 +   -   *   /   <   <=    >   >=    ==    !=    =   ;   ,   (   )   [   ]   {   }   /*    */
 ```
-  - Os marcadores de identificador e de número, definidos pelas expressões regulares a seguir:
+
+  - Símbolos referente espaços em branco no arquivo:
+  
+```
+\n    \r    [ ]
+```
+
+  - Os marcadores de identificador e de número são definidos pelas expressões regulares a seguir:
+   
 ```
 identificador (ID): letra+
 número (NUM): dígito+
 letra: a|..|z|A|..|Z
 dígito: 0|..|9
 ```
-Qualquer lexema lido que não seja os mencionados acima será tratado como erro.
+
+Nesse projeto utilizaremos uma variante do `identificador` para que seja aceito identificadores alfanuméricos, porém que iniciem com letras, assim a expressão regular correspondente é modificada para:
+
+```
+identificador (ID): letra.(letra|digito)*
+```
+
+Qualquer lexema lido que não se enquadre nos mencionados acima será tratado como erro.
 
 ## Estrutura
 
-- A estrutura de diretórios do projeto está organizada da seguinte maneira:
 As classes java do programa estão organizadas em duas pastas, `src/br.com.Model` e `test/br.com.Test`.
 
 Na primeira temos os seguintes arquivos:
