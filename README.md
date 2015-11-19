@@ -66,7 +66,7 @@ As classes java do programa estão organizadas em duas pastas, `src/br.com.Model
 
 Na primeira temos os seguintes arquivos:
 
-- `FileCheck`: classe responsável por verificar se tal arquivo a ser lido existe evalidar a extensão.
+- `FileCheck`: classe responsável por verificar se tal arquivo a ser lido existe e validar a extensão.
   
 - `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
   e armazená-los em um *buffer*, após validação feita em `FileCheck`.
@@ -87,17 +87,24 @@ Após concluir um número satisfatório de *tasks* iniciamos sua implementação
 
 As *tasks* criadas foram as seguintes:
 
-- *invalidExtensionFile*: método para testar o comportamento do programa com arquivos de extensão inválida.
+- *fileInexistent*: método para verificar existência do arquivo de entrada.
 
-- *validExtensionFile*: método para testar o comportamento do programa com arquivos de extensão válida.
+- *fileExist*: método para verificar a inexistência do arquivo de entrada.
 
-- *invalidFileName*: método para testar o comportamento do programa com arquivos de nome inválido.
+- *fileExtensionInvalid*: método para testar o comportamento do programa com arquivos de extensão inválida.
 
-- *validFileName*: método para testar o comportamento do programa com arquivos de nome válido.
+- *fileExtensionValid*: método para testar o comportamento do programa com arquivos de extensão válida.
 
-- *existFile*: método para verificar existência do arquivo de entrada.
+- *fileScannerCreated*: método para verificar se foi possível criar o arquivo de leitura da entrada.
 
-- *notExistFile*: método para verificar a inesistência do arquivo de entrada.
+- *validCaracterVectorReaded*: método para verificar se o *buffer* para armazenar os caracteres foi criado corretamente.
+
+- *validTokenReserved*: método para determinar se um lexema é identificado corretamente como uma palavra reservada.
+
+- *lexicalError*: método para testar erros léxicos que podem ocorrer.
+
+- *successfullAnalysis*: método para verificar se um arquivo de entrada realmente está correto.
+
 
 
 
