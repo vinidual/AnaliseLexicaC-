@@ -31,22 +31,18 @@ if    else    int   void    while   return
 ```
 +   -   *   /   <   <=    >   >=    ==    !=    =   ;   ,   (   )   [   ]   {   }   /*    */
 ```
+  - Os marcadores de identificador e de número, definidos pelas expressões regulares a seguir:
+```
+identificador (ID): letra+
+número (NUM): dígito+
+letra: a|..|z|A|..|Z
+dígito: 0|..|9
+```
 Qualquer lexema lido que não seja os mencionados acima será tratado como erro.
 
 ## Estrutura
 
-As classes java do programa estão organizadas em duas pastas, `src/br.com.Model` e `test/br.com.Test`.
-
-Na primeira temos os seguintes arquivos:
-
-  `FileCheck`: classe responsável por validar o nome, extensão e diretório do arquivo de entrada e verificar se 
-  tal arquivo a ser lido existe.
-  
-  `FileScanner`: classe responsável por executar os procedimentos de leitura dos caracteres do arquivo
-  e armazená-los em um *buffer*, pós validação feita em `FileCheck`.
-  
-  `LexicalAnalysis`: classe responsável por varrer o *buffer* criado e verificar os lexemas atribuindo marcas, ou *Tokens*, pós executação dos processos em `FileScanner`.
-
+A estrutura de diretórios do projeto está organizada da seguinte maneira:
 
 
  
