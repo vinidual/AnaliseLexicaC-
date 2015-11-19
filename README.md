@@ -7,7 +7,7 @@ Trabalho realizado para a disciplina de Validação e Verificação de Software 
 
 LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) implementado com metodologia TDD utilizando o framework [JUnit4](http://junit.org/).
 
-O objetivo desse trabalho é colocar em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software. Para seu desenvolvimento foi utilizado a IDE [Eclipse](https://projects.eclipse.org/releases/mars) Mars
+O objetivo desse trabalho é colocar em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software. Para seu desenvolvimento foi utilizado a IDE [Eclipse](https://projects.eclipse.org/releases/mars) Mars.
 
 ## O Problema
 
@@ -84,9 +84,39 @@ As demais pastas referenciam biliotecas (JRE e JUnit) e arquivos de configuraç�
 
 São tarefas pensadas antes de implementar o código dos testes, servem para manter um lembrete do que deve ser implementado. 
 
-Após concluir um número satisfatório de *tasks* iniciamos sua implementação no arquivo `LexicalAnalysisTDD` gerando somente código necessário na aplicação. Além disso, concretizamos nossos casos de teste.
+Após concluir um número satisfatório de *tasks* iniciamos sua implementação no arquivo `LexicalAnalysisTDD` gerando somente código necessário na aplicação. Além disso, concretizamos nossos casos de teste implementando as *tasks* como métodos da classe `LexicalAnalysisTDD`.
 
 - As *tasks* criadas foram as seguintes:
+
+- *invalidExtensionFile*: método para testar o comportamento do programa com arquivos de extensão inválida.
+
+- *validExtensionFile*: método para testar o comportamento do programa com arquivos de extensão válida.
+
+- *invalidFileName*: método para testar o comportamento do programa com arquivos de nome inválido.
+
+- *validFileName*: método para testar o comportamento do programa com arquivos de nome válido.
+
+- *existFile*: método para verificar existência do arquivo de entrada.
+
+- *notExistFile*: método para verificar a inesistência do arquivo de entrada.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
