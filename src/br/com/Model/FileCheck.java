@@ -2,41 +2,32 @@ package br.com.Model;
 import java.io.File;
 
 public class FileCheck {
+	String filename;
+	File file;
 	
-	private static String dir;
-	private static String filename;
-	private static File file;
-
-	public void createFile(String fn, String directory) {
-		filename = fn;
-		dir = directory;
-		file = new File( dir + "/" + filename );
+	public FileCheck(String filename){
+		this.filename = filename;
+		this.file = new File(filename);
 	}
-
-	public boolean validExtension() {
-		try{
-			if( filename.endsWith(".cm") )
-				return true;
-		} catch( NullPointerException ex ){
-			System.out.println( ex.getMessage() );
-		}
-		return false;
-	}
-
-	public boolean validName() {
-		if( filename.isEmpty() ||  !filename.matches("[a-zA-Z0-9]+.cm") )
-			return false;
-		return true;
-	}
-
-	public boolean existFile() {
-		if( file.exists() )
+	
+	public boolean exists() {
+		if (file.exists())
 			return true;
+		else{
+			System.out.println("File not found");
+			return false;
+		}
+	}
+	
+	public boolean verifyExtension() {
+		if(filename.endsWith(".cm"))
+			return true;
+		System.out.println("Please, enter a file with .cm extension");
 		return false;
 	}
 	
 	public File getFile(){
 		return file;
 	}
-	
+
 }
