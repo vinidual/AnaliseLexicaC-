@@ -119,65 +119,71 @@ Nesse teste o programa envia uma mensagem de erro `file not found`.
 
 Começamos criando o teste para um nome de arquivo inexistente:
 
-    @Test
-    public void fileInexistent() {
-      String filename = "file";
-      FileCheck file = new FileCheck();
-      assertFalse(file.exists(filename));
-    }
+      @Test
+      public void fileInexistent() {
+      	File file = new FileCheck("file");
+      	assertFalse(file.exists());
+      }
 
 Rodamos o teste e encontramos o seguinte erro: 
 `Não existe classe FileCheck`.
 
-Criamos a classe FileCheck em src/br/com/Model e rodamos o teste novamente, obtendo o erro: 
+Criamos a classe `FileCheck` em src/br/com/Model:
+
+      public class FileCheck {
+      	private String filename;
+      	private File file;
+      	
+      	public FileCheck(String filename){
+      		this.filename = filename;
+      		this.file = new File(filename);
+      	}
+      }
+
+Executamos o teste novamente, obtendo o erro:
 `Não foi definido o método exists(String) na classe FileCheck`.
 
-    public class FileCheck {
-        public boolean exists(String filename) {
-            File file = new File(filename);
-            if (file.exists())
-                return true;
-            else{
-                System.out.println("File not found");
-                return false;
-            }
+Implementamos o método `exists()`:
+
+      public boolean exists() {
+        if (file.exists()){
+          return true;
         }
-    }
+        else{
+          System.out.println("File not found");
+          return false;
+        }
+      }
+    
+Rodamos o teste e ele funcionou corretamente, retornando `file not found`.
 
 **Teste arquivo existente**
 
-Para esse teste colocamos um arquivo no projeto, `testSucess.cm`, e testamos se o método nos dá o resultado esperado 
+Para esse teste colocamos um arquivo no projeto, `testSucess.cm`, na pasta `src` e testamos se o método nos dá o resultado esperado
+
 com o seguinte código:
 
-    @Test
-    public void fileExist() {
-        String filename = "src/testSuccess.cm";
-        FileCheck file = new FileCheck();
-        assertTrue(file.exists(filename));
-    }
+      @Test
+      public void fileExist() {
+        File file;
+        file = new FileCheck("src/testSuccess.cm");
+        assertTrue(file.exists());
+      }
 
 Rodamos e verificamos sucesso no teste.
 
-Podemos refatorar os testes, movendo a declaração de `String filename` e do `FileCheck file` como objetos do escopo global da classe de teste. Assim não precisamos toda vez ter que declará-los. Assim ficamos com o seguinte código:
+Podemos refatorar os testes, movendo a declaração de `File file` como objeto do escopo global da classe de teste. Assim não precisamos toda vez ter que declará-los. Assim ficamos com o seguinte código:
 
-    public class LexicalAnalysisTDD {
-        private String filename;
-        private FileCheck file;
-        
-        @Test
-        public void fileInexistent() {
-            filename = "file";
-            file = new br.com.Model.FileCheck();
-            assertFalse(file.exists(filename));
-        }
-        
-        @Test
-        public void fileExist() {
-            String filename = "src/testSuccess.cm";
-            file = new FileCheck();
-            assertTrue(file.exists(filename));
-        }
-    }
+      @Test
+    	public void fileInexistent(){
+    		file = new FileCheck("file");
+    		assertFalse(file.exists());
+    	}
+    	@Test
+    	public void fileExist() {
+    		file = new FileCheck("src/testSuccess.cm");
+    		assertTrue(file.exists());
+    	}
 
 ### Teste arquivo de extensão valida/inválida ###
 
@@ -278,8 +284,10 @@ Além disso podemos tirar a `String filename` e inserir a `String` do teste dire
         file = new FileCheck("testInvalid.txt");
         assertFalse(file.verifyExtension());
     }
+    
+Fazemos também a alteração no construtor da classe.
 
-Teste arquivo extensão válida:
+**Teste arquivo extensão válida**
 
     @Test
     public void fileExtensionValid() {
