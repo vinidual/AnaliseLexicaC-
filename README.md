@@ -197,103 +197,103 @@ Para esses testes, entramos com uma `String` qualquer com uma extensão, não im
 
 Implementamos o teste:
 
-    @Test
-    public void fileExtensionInvalid() {
-        filename = "testInvalid.txt";
-        file = new FileCheck();
-        assertFalse(file.verifyExtension(filename));
-    }
+      @Test
+      public void fileExtensionInvalid() {
+          filename = "testInvalid.txt";
+          file = new FileCheck();
+          assertFalse(file.verifyExtension(filename));
+      }
 
 Verificamos que existe o seguinte erro:
 `Não foi definido o método verifyExtension(String) na classe FileCheck`.
 
 Implementamos na classe `FileCheck` o seguinte código:
 
-    public boolean verifyExtension(String filename) {
-        if(filename.endsWith(".cm"))
-            return true;
-        System.out.println("Please, enter a file with .cm extension");
-        return false;
-    }
+      public boolean verifyExtension(String filename) {
+          if(filename.endsWith(".cm"))
+              return true;
+          System.out.println("Please, enter a file with .cm extension");
+          return false;
+      }
 
 Podemos refatorar a classe `FileCheck`, já que os métodos desta usa `String filename` como parâmetro, assim não precisamos toda vez ter que inseri-lo. Podemos montar um construtor da classe com esse parâmetro e declarar a `String` como objeto da classe:
 
-    public class FileCheck {
-        private String filename;
-        
-        public FileCheck(String filename){
-            this.filename = filename;
-        }
-        
-        public boolean exists() {
-            File file = new File(filename);
-            if (file.exists())
-                return true;
-            else{
-                System.out.println("File not found");
-                return false;
-            }
-        }
-        
-        public boolean verifyExtension() {
-            if(filename.endsWith(".cm"))
-                return true;
-            System.out.println("Please, enter a file with .cm extension");
-            return false;
-        }
-    }
+      public class FileCheck {
+          private String filename;
+          
+          public FileCheck(String filename){
+              this.filename = filename;
+          }
+          
+          public boolean exists() {
+              File file = new File(filename);
+              if (file.exists())
+                  return true;
+              else{
+                  System.out.println("File not found");
+                  return false;
+              }
+          }
+          
+          public boolean verifyExtension() {
+              if(filename.endsWith(".cm"))
+                  return true;
+              System.out.println("Please, enter a file with .cm extension");
+              return false;
+          }
+      }
 
 E modificamos no teste:
 
-    private FileCheck file;
-    @Test
-    public void fileInexistent() {
-        file = new FileCheck("file");
-        assertFalse(file.exists());
-    }
-    @Test
-    public void fileExist() {
-        file = new FileCheck("src/testSuccess.cm");
-        assertTrue(file.exists());
-    }
-    @Test
-    public void fileExtensionInvalid() {
-        file = new FileCheck("testInvalid.txt");
-        assertFalse(file.verifyExtension());
-    }
-    @Test
-    public void fileExtensionValid() {
-        file = new FileCheck("testValid.cm");
-        assertTrue(file.verifyExtension());
-    }
+      private FileCheck file;
+      @Test
+      public void fileInexistent() {
+          file = new FileCheck("file");
+          assertFalse(file.exists());
+      }
+      @Test
+      public void fileExist() {
+          file = new FileCheck("src/testSuccess.cm");
+          assertTrue(file.exists());
+      }
+      @Test
+      public void fileExtensionInvalid() {
+          file = new FileCheck("testInvalid.txt");
+          assertFalse(file.verifyExtension());
+      }
+      @Test
+      public void fileExtensionValid() {
+          file = new FileCheck("testValid.cm");
+          assertTrue(file.verifyExtension());
+      }
     
 Além disso podemos tirar a `String filename` e inserir a `String` do teste diretamente no construtor, pois ela só é usada para colocar no construtor:
 
-    @Test
-    public void fileInexistent() {
-        file = new FileCheck("file");
-        assertFalse(file.exists());
-    }
-    @Test
-    public void fileExist() {
-        file = new FileCheck("src/testSuccess.cm");
-        assertTrue(file.exists());
-    }
-    @Test
-    public void fileExtensionInvalid() {
-        file = new FileCheck("testInvalid.txt");
-        assertFalse(file.verifyExtension());
-    }
+      @Test
+      public void fileInexistent() {
+          file = new FileCheck("file");
+          assertFalse(file.exists());
+      }
+      @Test
+      public void fileExist() {
+          file = new FileCheck("src/testSuccess.cm");
+          assertTrue(file.exists());
+      }
+      @Test
+      public void fileExtensionInvalid() {
+          file = new FileCheck("testInvalid.txt");
+          assertFalse(file.verifyExtension());
+      }
     
 Fazemos também a alteração no construtor da classe.
 
 **Teste arquivo extensão válida**
 
-    @Test
-    public void fileExtensionValid() {
-        file = new FileCheck("testValid.cm");
-        assertTrue(file.verifyExtension());
-    }
+      @Test
+      public void fileExtensionValid() {
+          file = new FileCheck("testValid.cm");
+          assertTrue(file.verifyExtension());
+      }
 
 Rodamos e não foram encontrados erros.
 
@@ -303,11 +303,11 @@ Esse teste verifica se ocorreu a criação do arquivo de varredura da entrada pa
 
 A implementação do teste:
 
-    @Test
-    public void fileScannerCreated() {
-        file = new FileCheck("src/file.cm");
-        assertTrue(fs.createFileScanner(file.getFile()));
-    }
+      @Test
+      public void fileScannerCreated() {
+          file = new FileCheck("src/file.cm");
+          assertTrue(fs.createFileScanner(file.getFile()));
+      }
     
 O objeto `fs` se refere à classe `FileScanner` e como provavelmente utilizaremos para outros testes resolvemos criar o objeto no escopo global da classe de teste.
 
@@ -315,34 +315,124 @@ Houve a necessidade de criar o método `getFile()` na classe `FileCheck` para us
 
 Criamos o método `getFile` em `FileCheck`:
 
-    public File getFile(){
-        File file = new File(filename);
-        return file;
-    }
+      public File getFile(){
+          File file = new File(filename);
+          return file;
+      }
 
 Ainda na classe `File Check`:
 
-Podemos refatorar o código já que os métodos exists() e o getFile() criam um objeto File. Declaramos como atributo da classe o objeto file, modificamos o construtor e os métodos exists() e getFile():
+Podemos refatorar o código já que os métodos `exists()` e o `getFile()` criam um objeto `File`. Assim declaramos como objeto global da classe e modificamos o construtor e os métodos `exists()` e `getFile()`:
 
-private File file;
-    
-    public FileCheck(String filename){
-        this.filename = filename;
-        this.file = new File(filename);
-    }
-    
-    public boolean exists() {
-        if (file.exists())
-            return true;
-        else{
-            System.out.println("File not found");
-            return false;
-        }
-    }
+      private File file;
+      public FileCheck(String filename){
+          this.filename = filename;
+          this.file = new File(filename);
+      }
+      public boolean exists() {
+          if (file.exists())
+              return true;
+          else{
+              System.out.println("File not found");
+              return false;
+          }
+      }
+      public File getFile(){
+          return file;
+      }
 
-    public File getFile(){
-        return file;
-    }
+### Teste de validação do arquivo de varredura criado ###
+
+Verifica se o arquivo foi lido e criado conforme o esperado:
+
+      @Test
+    	public void validCaracterVectorReaded(){
+    		char[] expected = {'1','2','3',';'};
+    		file = new FileCheck("src/testNumValid.cm");
+    		fs.createFileScanner(file.getFile());
+    		assertArrayEquals(expected, fs.readFile());
+    	}
+
+Foi necessário criar o método `readFile()` na classe `FileScanner`:
+
+      public char[] readFile(){
+    		try {
+    			cbuffer = new char [(int) f.length()];
+    			br.read(cbuffer);
+    			return cbuffer;
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		return null;
+    	}
+
+### Teste para verificação de *Tokens* ###
+
+      @Test
+      public void validTokenReserved(){
+      	file = new FileCheck("src/file.cm");
+      	fs.createFileScanner(file.getFile());
+      	assertTrue(la.checkTokenReserved("int"));
+      }
+    
+Foi necessário implementar a classe `LexicalAnalysis` que é responsável por realizar toda a análise léxica, que é instânciada pelo objeto `la`, que foi declarado no escopo global da classe de teste.
+
+A implementação inicial da classe `LexicalAnalysis`:
+
+      public class LexicalAnalysis {
+        public boolean checkTokenReserved( String str ) {
+      		if( str.compareTo("if") == 0 ||
+      			str.compareTo("else") == 0 ||
+      			str.compareTo("int") == 0 ||
+      			str.compareTo("void") == 0 ||
+      			str.compareTo("while") == 0 ||
+      			str.compareTo("return") == 0 
+      		)
+      			return true;
+      		return false;
+      	}
+      }
+    
+### Teste de erro léxico ###
+
+      @Test
+    	public void lexicalError1() {
+    		file = new FileCheck("src/file.cm");
+    		fs.createFileScanner(file.getFile());
+    		char[] buffer = {'#','$','a','\n'};
+    		la.lexicalAnalysis(buffer);
+    		expected.clear();
+    		expected.add("ERR");
+    		expected.add("ERR");
+    		expected.add("ID");
+    		assertEquals(expected, la.getResult());
+    	}
+    	
+Foram necessárias diversas adições à classe `LexicalAnalysis` que resultaram no arquivo atual.
+
+`expected` é um `ArrayList<String>`.
+
+O método `getResult()` retorna uma `String` com todos os erros léxicos do arquivo de entrada.
+
+### Teste de análise com sucesso ###
+
+Retorna para vericar a corre
+
+@Test
+	public void successfullAnalysis1() {
+		file = new FileCheck("src/file.cm");
+		fs.createFileScanner(file.getFile());
+		char[] buffer = fs.readFile();
+		la.lexicalAnalysis(buffer);
+		expected.clear();
+		expected.add("ID");
+		expected.add("ATR");
+		expected.add("NUM");
+		expected.add("COMPT");
+		assertEquals(expected, la.getResult());
+	}
+
+
 
 
 
