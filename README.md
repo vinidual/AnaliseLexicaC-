@@ -395,30 +395,49 @@ A implementação inicial da classe `LexicalAnalysis`:
     
 ### Teste de erro léxico ###
 
-      @Test
-    	public void lexicalError1() {
-    		file = new FileCheck("src/file.cm");
-    		fs.createFileScanner(file.getFile());
-    		char[] buffer = {'#','$','a','\n'};
-    		la.lexicalAnalysis(buffer);
-    		expected.clear();
-    		expected.add("ERR");
-    		expected.add("ERR");
-    		expected.add("ID");
-    		assertEquals(expected, la.getResult());
-    	}
-    	
+Verifica se há ocorrência do *Token* `ERR` no arquivo de entrada.
+```
+	@Test
+	public void lexicalError1() {
+		file = new FileCheck("src/file.cm");
+		fs.createFileScanner(file.getFile());
+		char[] buffer = {'#','$','a','\n'};
+		la.lexicalAnalysis(buffer);
+		expected.clear();
+		expected.add("ERR");
+		expected.add("ERR");
+		expected.add("ID");
+		assertEquals(expected, la.getResult());
+	}
+	
+	@Test
+	public void lexicalError2() {
+		file = new FileCheck("src/file.cm");
+		fs.createFileScanner(file.getFile());
+		char[] buffer = {'#','$', '~','a','\n','&'};
+		la.lexicalAnalysis(buffer);
+		expected.clear();
+		expected.add("ERR");
+		expected.add("ERR");
+		expected.add("ID");
+		System.out.println(la.getError());
+		assertFalse(la.getError().compareTo("Successfull Analysis")==0);
+	}
+```    	
 Foram necessárias diversas adições à classe `LexicalAnalysis` que resultaram no arquivo atual.
 
 `expected` é um `ArrayList<String>`.
 
-O método `getResult()` retorna uma `String` com todos os erros léxicos do arquivo de entrada.
+O método `getResult()` retorna um `ArrayList<String>` com todos os lexemas do arquivo de entrada.
+
+O método `getError()` retorna uma `String` com todos os erros léxicos do arquivo de entrada ou a mensagem
+`Successfull Analysis` caso contrário.
 
 ### Teste de análise com sucesso ###
 
-Retorna para vericar a corre
-
-@Test
+Teste para verificar se retorna a mensagem `Successfull Analysis` caso o arquivo esteja lexicamente correto.
+```
+	@Test
 	public void successfullAnalysis1() {
 		file = new FileCheck("src/file.cm");
 		fs.createFileScanner(file.getFile());
@@ -431,7 +450,21 @@ Retorna para vericar a corre
 		expected.add("COMPT");
 		assertEquals(expected, la.getResult());
 	}
+	
+	@Test
+	public void successfullAnalysis2() {
+		file = new FileCheck("src/file.cm");
+		fs.createFileScanner(file.getFile());
+		char[] buffer = fs.readFile();
+		la.lexicalAnalysis(buffer);
+		assertTrue(la.getError().compareTo("Successfull Analysis")==0);
+	}
+```
+Na classe `LexicalAnalysis` o método `lexicalAnalysis(char[] buffer)` inicia a análise para o *buffer*
 
+O método `readChar(String lex)` analisa cada caracter covertido em `String`.
+
+Os demais métodos `letterReaded(String lex)`, `numberReaded(String lex)`, `symbolReaded(String lex)` e `checkLastLexema()` auxiliam no processo.
 
 
 
