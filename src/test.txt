@@ -1,8 +1,0 @@
-void main(){
-int a= 0;
-if(a==b)
-	printf("rarara");
-	/*4321nvf9ds%$4325*/
-else rarar;
-	/*yeaaa*/
-}

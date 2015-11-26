@@ -10,6 +10,9 @@ public class LexicalAnalysis {
 	
 	private static int numLines = 1;
 	
+	private static int inerror = 0;
+	private static String lexerror = "";
+	
 	private static ArrayList<String> result = new ArrayList<String>();
 	
 	private static Map<String,String> error = new HashMap<String,String>();
@@ -29,7 +32,12 @@ public class LexicalAnalysis {
 	Token token;
 	
 	public void lexicalAnalysis( char[] buffer ){
+		error.clear();
 		result.clear();
+		lexema = "";
+		numLines = 1;
+		lexerror = "";
+		inerror = 0;
 		for( int i=0; i < buffer.length; i++ ){
 			this.readChar(Character.toString(buffer[i]));
 		}
@@ -49,6 +57,8 @@ public class LexicalAnalysis {
 	}
 	
 	public void readChar( String lex ){
+		if( inerror == 1 && !lex.matches("\n") && !lex.matches(";") )
+			lexerror += lex;
 		if( lex.matches("[a-zA-Z]") ){
 			letterReaded(lex);
 		}
@@ -138,17 +148,25 @@ public class LexicalAnalysis {
 			symbolReaded("COM");
 		}
 		else if( lex.matches(";") ){
+			lexerror += lex;
 			symbolReaded("COMPT");
 		}
-		else if( lex.matches("[ |\t|\"|\'|\r]") ){
-			//nothing
-		}
-		else if( lex.matches("\n") ){
-			numLines += 1;
+		else if( lex.matches("[ |\t|\"|\'|\r|\n]") ){
+			if( inerror == 1 && lexerror.compareTo("") != 0 ){
+				error.put(lexerror, ""+numLines);
+				lexerror = "";
+			}
+			inerror = 0;
+			if( lex.matches("\n") ){
+				numLines += 1;
+				inerror = 0;
+			}
 		}
 		else {
 			symbolReaded("ERR");
-			error.put(lex, ""+numLines);
+			if( inerror == 0 )
+				lexerror += lex;
+			inerror = 1;
 		}
 	}
 	
