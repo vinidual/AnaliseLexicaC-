@@ -370,9 +370,12 @@ Foi necessário criar o método `readFile()` na classe `FileScanner`:
 
       @Test
       public void validTokenReserved(){
-      	file = new FileCheck("src/file.cm");
-      	fs.createFileScanner(file.getFile());
-      	assertTrue(la.checkTokenReserved("int"));
+        assertTrue(la.checkTokenReserved("if"));
+        assertTrue(la.checkTokenReserved("else"));
+        assertTrue(la.checkTokenReserved("int"));
+        assertTrue(la.checkTokenReserved("void"));
+        assertTrue(la.checkTokenReserved("while"));
+        assertTrue(la.checkTokenReserved("return"));
       }
     
 Foi necessário implementar a classe `LexicalAnalysis` que é responsável por realizar toda a análise léxica, que é instânciada pelo objeto `la`, que foi declarado no escopo global da classe de teste.
