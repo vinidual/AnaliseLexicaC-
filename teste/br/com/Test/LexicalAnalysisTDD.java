@@ -57,9 +57,12 @@ public class LexicalAnalysisTDD {
 	
 	@Test
 	public void validTokenReserved(){
-		file = new FileCheck("src/file.cm");
-		fs.createFileScanner(file.getFile());
+		assertTrue(la.checkTokenReserved("if"));
+		assertTrue(la.checkTokenReserved("else"));
 		assertTrue(la.checkTokenReserved("int"));
+		assertTrue(la.checkTokenReserved("void"));
+		assertTrue(la.checkTokenReserved("while"));
+		assertTrue(la.checkTokenReserved("return"));
 	}
 	
 	@Test
