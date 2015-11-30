@@ -7,7 +7,7 @@ Trabalho realizado para a disciplina de Validação e Verificação de Software 
 
 LexicalAnalysisC- é um programa em Java para realizar a análise léxica da [linguagem C-](http://www.cs.dartmouth.edu/~cs57/Project/C-%20Spec.pdf) implementado com metodologia TDD utilizando o framework [JUnit4](http://junit.org/).
 
-O objetivo desse trabalho é colocar em prática o TDD para entender seu funcionamento e filosofia no desenvolvimento de software. Para seu desenvolvimento foi utilizado a IDE [Eclipse](https://projects.eclipse.org/releases/mars) Mars.
+O objetivo desse trabalho é colocar em prática o TDD com utilização do JMock para entender seu funcionamento e filosofia no desenvolvimento de software. Para seu desenvolvimento foi utilizado a IDE [Eclipse](https://projects.eclipse.org/releases/mars) Mars.
 
 ## O Problema
 
@@ -107,7 +107,7 @@ As *tasks* criadas foram as seguintes:
 
 ## Desenvolvimento ##
 
-O objetivo do TDD é gerar código a partir dos testes, assim descreveremos como ocorreu esse desenvolvimento.
+O objetivo do TDD é guiar-nos na geração de código a partir dos testes, assim descreveremos como ocorreu esse desenvolvimento.
 
 ### Teste arquivo Existente/Inexistente ###
 
